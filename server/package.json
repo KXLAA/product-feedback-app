@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Product Feedback App",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --fix .",
+    "format": "prettier -w .",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+  },
+  "author": "KXLA",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.3",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.0",
+    "supertest": "^6.1.6"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "mongoose": "^6.0.14"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
