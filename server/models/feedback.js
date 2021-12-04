@@ -7,7 +7,12 @@ const feedbackSchema = new mongoose.Schema({
   upvotes: Number,
   status: String,
   description: { type: String, required: true },
-  comments: [String],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

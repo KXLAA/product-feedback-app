@@ -21,6 +21,11 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === "ValidationError") {
     return response.status(400).json({ error: error.message });
   }
+  if (error.name === "MongoServerError" && error.code === 11000) {
+    return response
+      .status(500)
+      .send({ success: false, error: "Username already exists!" });
+  }
 
   return next(error);
 };

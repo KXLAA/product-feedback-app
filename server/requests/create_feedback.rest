@@ -1,0 +1,13 @@
+POST http://localhost:4000/api/feedback-list
+Content-Type: application/json
+
+{
+    "title": "Testing Feedback Tests",
+    "category": "Test",
+    "upvotes": 300,
+    "status": "ongoing",
+    "description": "This is a test for a test, with a test with jest",
+    "comments": [],
+     "userId": "61ab7800650af7d9873c0982"
+
+}
