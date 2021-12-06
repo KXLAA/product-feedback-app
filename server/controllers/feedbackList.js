@@ -35,6 +35,10 @@ feedbackRouter.post("/", userExtractor, async (request, response) => {
     user: user._id,
   });
 
+  if (!feedback.upvotes) {
+    feedback.upvotes = 0;
+  }
+
   const savedFeedback = await feedback.save();
   user.feedback = user.feedback.concat(savedFeedback._id);
   await user.save();

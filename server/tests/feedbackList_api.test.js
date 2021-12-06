@@ -105,11 +105,46 @@ describe("when there is initially one user in db", () => {
     expect(usersAtEnd).toHaveLength(usersAtStart.length);
   }, 1000);
 
-  test("creation fails with proper status code & message if password is too short", async () => {});
+  test("creation fails with proper status code & message if password is too short", async () => {
+    const usersAtStart = await helper.usersInDb();
+
+    const newUser = {
+      username: "kola",
+      name: "kola",
+      password: "22",
+    };
+
+    const result = await api
+      .post("/api/users")
+      .send(newUser)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+    const usersAtEnd = await helper.usersInDb();
+
+    expect(result.body.error).toContain("password too short");
+    expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  }, 1000);
 });
 
+let headers;
+
 describe("Feedback can be CREATED", () => {
-  test("user can Create feedback", async () => {
+  beforeEach(async () => {
+    const newUser = {
+      username: "testing",
+      name: "testing",
+      password: "testing",
+    };
+    await api.post("/api/users").send(newUser);
+
+    const result = await api.post("/api/login").send(newUser);
+
+    headers = {
+      Authorization: `bearer ${result.body.token}`,
+    };
+  });
+
+  test("user can create feedback", async () => {
     const feedbackAtStart = await helper.feedbackInDb();
     const usersAtStart = await helper.usersInDb();
     const userToCreate = usersAtStart[0];
@@ -127,17 +162,138 @@ describe("Feedback can be CREATED", () => {
     await api
       .post("/api/feedback-list")
       .send(newFeedback)
+      .set(headers)
       .expect(200)
       .expect("Content-Type", /application\/json/);
 
     const feedbackAtEnd = await helper.feedbackInDb();
     expect(feedbackAtEnd).toHaveLength(feedbackAtStart.length + 1);
   }, 10000);
+
+  test("upvotes get value 0 as default", async () => {
+    const newFeedback = {
+      title: "Testing Feedback Tests 45566",
+      category: "Test",
+      status: "ongoing",
+      description: "This is a test for a test, with a test with jest",
+      comments: [],
+    };
+
+    await api
+      .post("/api/feedback-list")
+      .send(newFeedback)
+      .set(headers)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+
+    const feedbackAtEnd = await helper.feedbackInDb();
+    const added = feedbackAtEnd.find(
+      (feedback) => feedback.title === newFeedback.title
+    );
+    expect(added.upvotes).toEqual(0);
+  }, 10000);
+
+  test("operation fails with proper error if token is missing", async () => {
+    const newFeedback = {
+      title: "Testing Feedback Tests",
+      category: "Test",
+      upvotes: 300,
+      status: "ongoing",
+      description: "This is a test for a test, with a test with jest",
+      comments: [],
+    };
+
+    await api
+      .post("/api/feedback-list")
+      .send(newFeedback)
+      .expect(401)
+      .expect("Content-Type", /application\/json/);
+  });
 });
 
-describe("Feedback can be UPDATED ", () => {});
+describe("Feedback can be DELETED", () => {
+  let result;
+  beforeEach(async () => {
+    const usersAtStart = await helper.usersInDb();
+    const userToCreate = usersAtStart[0];
 
-describe("Feedback can be DELETED ", () => {});
+    const newFeedback = {
+      title: "Testing Delete Tests",
+      category: "Test",
+      upvotes: 300,
+      status: "ongoing",
+      description: "This is a test for a test, with a test with jest 4 kxla",
+      comments: [],
+      userId: `${userToCreate.id}`,
+    };
+
+    result = await api
+      .post("/api/feedback-list")
+      .send(newFeedback)
+      .set(headers);
+  });
+
+  test("Feedback can be DELETED ", async () => {
+    const FeedbackToDel = result.body;
+
+    const initialFeedback = await helper.feedbackInDb();
+    await api
+      .delete(`/api/feedback-list/${FeedbackToDel.id}`)
+      .set(headers)
+      .expect(204);
+
+    const FeedbackAtEnd = await helper.feedbackInDb();
+
+    expect(FeedbackAtEnd.length).toBe(initialFeedback.length - 1);
+
+    const titles = FeedbackAtEnd.map((feedback) => feedback.title);
+    expect(titles).not.toContain(FeedbackToDel.title);
+  }, 10000);
+});
+
+describe("Feedback can be UPDATED", () => {
+  let result;
+  beforeEach(async () => {
+    const usersAtStart = await helper.usersInDb();
+    const userToCreate = usersAtStart[0];
+
+    const newFeedback = {
+      title: "Testing Delete Tests",
+      category: "Test",
+      upvotes: 300,
+      status: "ongoing",
+      description: "This is a test for a test, with a test with jest 4 kxla",
+      comments: [],
+      userId: `${userToCreate.id}`,
+    };
+
+    result = await api
+      .post("/api/feedback-list")
+      .send(newFeedback)
+      .set(headers);
+  });
+
+  test("Feedback can be UPDATED ", async () => {
+    const FeedbackToUpdate = result.body;
+
+    const editedFeedback = {
+      ...FeedbackToUpdate,
+      upvotes: FeedbackToUpdate.upvotes + 1,
+    };
+
+    await api
+      .put(`/api/feedback-list/${FeedbackToUpdate.id}`)
+      .send(editedFeedback)
+      .expect(200)
+      .set(headers);
+
+    const FeedbackAtEnd = await helper.feedbackInDb();
+    const edited = FeedbackAtEnd.find(
+      (feedback) => feedback.description === FeedbackToUpdate.description
+    );
+    expect(edited.upvotes).toBe(FeedbackToUpdate.upvotes + 1);
+  }, 10000);
+});
 
 afterAll(() => {
   mongoose.connection.close();
