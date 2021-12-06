@@ -28,4 +28,6 @@ feedbackSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("feedback", feedbackSchema);
+const Feedback = mongoose.model("Feedback", feedbackSchema);
+
+module.exports = Feedback;
