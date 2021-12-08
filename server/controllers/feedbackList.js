@@ -28,7 +28,7 @@ feedbackRouter.post("/", userExtractor, async (request, response) => {
   const feedback = new Feedback({
     title: body.title,
     category: body.category,
-    upvotes: 0,
+    upvotes: body.upvotes,
     status: body.status,
     description: body.description,
     comments: [],

@@ -7,12 +7,10 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  feedback: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Feedback",
-    },
-  ],
+  feedback: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Feedback",
+  },
 });
 
 commentSchema.set("toJSON", {

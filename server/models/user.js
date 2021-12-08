@@ -20,6 +20,9 @@ const userSchema = mongoose.Schema({
       ref: "Comment",
     },
   ],
+  avatar: {
+    type: String,
+  },
 });
 
 userSchema.set("toJSON", {
