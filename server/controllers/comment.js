@@ -6,7 +6,15 @@ const Feedback = require("../models/feedback");
 
 // Get All
 commentRouter.get("/", async (request, response) => {
-  const comments = await Comment.find({});
+  const comments = await Comment.find({})
+    .populate("user", {
+      username: 1,
+      name: 1,
+    })
+    .populate("feedback", {
+      title: 1,
+      description: 1,
+    });
   response.json(comments.map((comment) => comment));
 });
 

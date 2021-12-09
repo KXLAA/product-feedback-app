@@ -1,0 +1,8 @@
+POST http://localhost:4000/api/replies/61b12487f09786ca5eb53d61
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvdHlrYXkiLCJpZCI6IjYxYjExZDQyOTAxNjFhZWJjODljYzJjMCIsImlhdCI6MTYzOTAzNjE5MiwiZXhwIjoxNjM5MDM5NzkyfQ.yHtNMq2rW-QITTeDx47FZOPOvrN_Idg1TQcCfMqXyKc
+
+{
+    "content": "Testing Replies, lets see if it works"
+
+}

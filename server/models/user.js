@@ -20,6 +20,12 @@ const userSchema = mongoose.Schema({
       ref: "Comment",
     },
   ],
+  replies: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Reply",
+    },
+  ],
   avatar: {
     type: String,
   },

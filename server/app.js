@@ -9,6 +9,7 @@ const feedbackRouter = require("./controllers/feedbackList");
 const userRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
 const commentRouter = require("./controllers/comment");
+const replyRouter = require("./controllers/replies");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/feedback-list", feedbackRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/replies", replyRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

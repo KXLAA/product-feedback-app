@@ -11,6 +11,12 @@ const commentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Feedback",
   },
+  replies: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Reply",
+    },
+  ],
 });
 
 commentSchema.set("toJSON", {
@@ -22,4 +28,4 @@ commentSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("comment", commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);
