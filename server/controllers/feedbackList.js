@@ -5,15 +5,22 @@ const { userExtractor } = require("../utils/middleware");
 
 // Get All
 feedbackRouter.get("/", async (request, response) => {
-  const feedbackList = await Feedback.find({}).populate("user", {
-    username: 1,
-    name: 1,
-  });
+  const feedbackList = await Feedback.find({})
+    .populate("user", {
+      username: 1,
+      name: 1,
+    })
+    .populate("comments", {
+      content: 1,
+      user: 1,
+    });
   response.json(feedbackList.map((feedback) => feedback));
 });
 
 feedbackRouter.get("/:id", async (request, response) => {
-  const feedback = await Feedback.findById(request.params.id);
+  const feedback = await Feedback.findById(request.params.id).populate(
+    "comments"
+  );
   if (feedback) {
     response.json(feedback);
   } else {

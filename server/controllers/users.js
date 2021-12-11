@@ -12,6 +12,15 @@ userRouter.get("/", async (request, response) => {
   response.json(users);
 });
 
+userRouter.get("/:id", async (request, response) => {
+  const user = await User.findById(request.params.id);
+  if (user) {
+    response.json(user);
+  } else {
+    response.status(404).end();
+  }
+});
+
 userRouter.post("/", async (request, response) => {
   const { body } = request;
 
