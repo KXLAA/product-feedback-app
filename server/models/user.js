@@ -8,24 +8,7 @@ const userSchema = mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  feedback: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Feedback",
-    },
-  ],
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
-  replies: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Reply",
-    },
-  ],
+  email: String,
   avatar: {
     type: String,
   },

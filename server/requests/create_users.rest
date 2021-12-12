@@ -2,9 +2,9 @@ POST http://localhost:4000/api/users
 Content-Type: application/json
 
 {
-    "username": "rotykay",
-    "name":"Korty May",
-    "password": "rotykay",
+    "username": "mandyKay",
+    "name":"Mandy Kay",
+    "password": "mandyKay",
     "feedback": []
 }
 
@@ -13,5 +13,13 @@ Content-Type: application/json
 #     "username": "velvetround",
 #     "name":"Zena Kelley",
 #     "password": "velvetround",
+#     "feedback": []
+# }
+
+
+# {
+#     "username": "rotykay",
+#     "name":"Korty May",
+#     "password": "rotykay",
 #     "feedback": []
 # }
