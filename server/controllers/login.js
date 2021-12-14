@@ -40,6 +40,7 @@ loginRouter.post("/", async (request, response) => {
     name: user.name,
     id: user._id,
     avatar: user.avatar,
+    feedback: user.feedback,
   });
 });
 

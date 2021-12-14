@@ -46,9 +46,13 @@ feedbackRouter.post("/", userExtractor, async (request, response) => {
     feedback.upvotes = 0;
   }
 
+  if (!feedback.status) {
+    feedback.status = "Suggestion";
+  }
+
   const savedFeedback = await feedback.save();
-  user.feedback = user.feedback.concat(savedFeedback._id);
-  await user.save();
+  // user.feedback = user.feedback.concat(savedFeedback._id);
+  // await user.save();
   return response.json(savedFeedback);
 });
 
@@ -56,12 +60,12 @@ feedbackRouter.post("/", userExtractor, async (request, response) => {
 feedbackRouter.put("/:id", userExtractor, async (request, response) => {
   const { body, user } = request;
 
-  const feedback = await Feedback.findById(request.params.id);
-  if (feedback.user.toString() !== user.id.toString()) {
-    return response
-      .status(401)
-      .json({ error: "only the creator can update feedback" });
-  }
+  // const feedback = await Feedback.findById(request.params.id);
+  // if (feedback.user.toString() !== user.id.toString()) {
+  //   return response
+  //     .status(401)
+  //     .json({ error: "only the creator can update feedback" });
+  // }
   const newFeedback = {
     title: body.title,
     upvotes: body.upvotes,
@@ -70,13 +74,16 @@ feedbackRouter.put("/:id", userExtractor, async (request, response) => {
     description: body.description,
   };
 
+  const options = {
+    new: true,
+    upsert: true,
+  };
+
   const updatedFeedback = await Feedback.findByIdAndUpdate(
-    request.params.id,
+    { _id: request.params.id },
     newFeedback,
-    {
-      new: true,
-    }
-  );
+    options
+  ).exec();
 
   return response.json(updatedFeedback);
 });
@@ -93,11 +100,11 @@ feedbackRouter.delete("/:id", userExtractor, async (request, response) => {
   }
 
   await feedback.remove();
-  user.feedback = user.feedback.filter(
-    (feedbackToDelete) =>
-      feedbackToDelete.id.toString() !== request.params.id.toString()
-  );
-  await user.save();
+  // user.feedback = user.feedback.filter(
+  //   (feedbackToDelete) =>
+  //     feedbackToDelete.id.toString() !== request.params.id.toString()
+  // );
+  // await user.save();
   return response.status(204).end();
 });
 

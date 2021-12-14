@@ -2,10 +2,10 @@ POST http://localhost:4000/api/users
 Content-Type: application/json
 
 {
-    "username": "mandyKay",
-    "name":"Mandy Kay",
-    "password": "mandyKay",
-    "feedback": []
+    "username": "Mayd",
+    "name":"Mayd Blue",
+    "password": "Mayd"
+
 }
 
 

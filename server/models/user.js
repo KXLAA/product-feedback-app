@@ -12,6 +12,12 @@ const userSchema = mongoose.Schema({
   avatar: {
     type: String,
   },
+  feedback: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Feedback",
+    },
+  ],
 });
 
 userSchema.set("toJSON", {

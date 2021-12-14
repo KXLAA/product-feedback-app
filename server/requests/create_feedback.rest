@@ -1,14 +1,14 @@
 POST http://localhost:4000/api/feedback-list
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvdHlrYXkiLCJpZCI6IjYxYjExZDQyOTAxNjFhZWJjODljYzJjMCIsImlhdCI6MTYzODk5NzMyOCwiZXhwIjoxNjM5MDAwOTI4fQ.wuylDZ7ueWgGhA51MRgm2OpD0A4rcLklV9dmJTsjtqA
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvdHlrYXkiLCJpZCI6IjYxYjExZDQyOTAxNjFhZWJjODljYzJjMCIsImlhdCI6MTYzOTQ3MzA5MywiZXhwIjoxNjM5NDc2NjkzfQ.ttVsdqCaMaeXtyfXtH-9DVj8rJkcTwLBu-NDhRJNsqY
 
 {
-    "title": "Add micro-interactions",
+    "title": "Addf micro-interactions",
     "category": "enhancement",
     "upvotes": 71,
     "status": "live",
-    "description": "Small animations at specific points can add delight.",
+    "description": "Small anfffimations at specific points can add delight.",
     "comments": [],
-     "userId": "61b11d4290161aebc89cc2c0"
+    "userId": "61b11d4290161aebc89cc2c0"
 
 }

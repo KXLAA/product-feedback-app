@@ -1,0 +1,7 @@
+PUT http://localhost:4000/api/feedback-list/61b897a995e254d51c6e1f3f
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvdHlrYXkiLCJpZCI6IjYxYjExZDQyOTAxNjFhZWJjODljYzJjMCIsImlhdCI6MTYzOTQ5NDQ3MCwiZXhwIjoxNjM5NDk4MDcwfQ.soFzRzSW0lE-valkMOcJvopx7y3C48ED8LmtchAY2X4
+
+{
+    "upvotes": 1
+}
