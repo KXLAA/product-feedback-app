@@ -30,10 +30,24 @@ commentRouter.post("/:id", userExtractor, async (request, response) => {
   });
 
   const savedComment = await comment.save();
-  user.comments = user.comments.concat(savedComment._id);
   feedback.comments = feedback.comments.concat(savedComment._id);
-  await user.save();
   await feedback.save();
   return response.json(savedComment);
+});
+
+// Delete
+commentRouter.delete("/:id", userExtractor, async (request, response) => {
+  const { user } = request;
+
+  const comment = await Comment.findById(request.params.id);
+
+  if (comment.user.toString() !== user.id.toString()) {
+    return response
+      .status(401)
+      .json({ error: "only the creator can delete blogs" });
+  }
+
+  await comment.remove();
+  return response.status(204).end();
 });
 module.exports = commentRouter;

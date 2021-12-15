@@ -51,21 +51,15 @@ feedbackRouter.post("/", userExtractor, async (request, response) => {
   }
 
   const savedFeedback = await feedback.save();
-  // user.feedback = user.feedback.concat(savedFeedback._id);
-  // await user.save();
+  user.feedback = user.feedback.concat(savedFeedback._id);
+  await user.save();
   return response.json(savedFeedback);
 });
 
 // Update
 feedbackRouter.put("/:id", userExtractor, async (request, response) => {
-  const { body, user } = request;
+  const { body } = request;
 
-  // const feedback = await Feedback.findById(request.params.id);
-  // if (feedback.user.toString() !== user.id.toString()) {
-  //   return response
-  //     .status(401)
-  //     .json({ error: "only the creator can update feedback" });
-  // }
   const newFeedback = {
     title: body.title,
     upvotes: body.upvotes,
@@ -76,7 +70,6 @@ feedbackRouter.put("/:id", userExtractor, async (request, response) => {
 
   const options = {
     new: true,
-    upsert: true,
   };
 
   const updatedFeedback = await Feedback.findByIdAndUpdate(
@@ -100,11 +93,11 @@ feedbackRouter.delete("/:id", userExtractor, async (request, response) => {
   }
 
   await feedback.remove();
-  // user.feedback = user.feedback.filter(
-  //   (feedbackToDelete) =>
-  //     feedbackToDelete.id.toString() !== request.params.id.toString()
-  // );
-  // await user.save();
+  user.feedback = user.feedback.filter(
+    (feedbackToDelete) =>
+      feedbackToDelete.id.toString() !== request.params.id.toString()
+  );
+  await user.save();
   return response.status(204).end();
 });
 
