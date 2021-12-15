@@ -18,6 +18,35 @@ userRouter.get("/:id", async (request, response) => {
   }
 });
 
+// Update
+userRouter.put("/:id", async (request, response) => {
+  const { body } = request;
+  const user = await User.findById(request.params.id);
+
+  let updatedUser;
+  const options = {
+    new: true,
+  };
+
+  if (user.liked.some((like) => like.toString() === body.liked))
+    updatedUser = await User.findByIdAndUpdate(
+      { _id: request.params.id },
+      { $pull: { liked: body.liked } },
+      options
+    );
+
+  if (!user.liked.some((like) => like.toString() === body.liked))
+    updatedUser = await User.findByIdAndUpdate(
+      { _id: request.params.id },
+      { $push: { liked: body.liked } },
+      options
+    );
+
+  console.log(updatedUser);
+
+  return response.json(updatedUser);
+});
+
 userRouter.post("/", async (request, response) => {
   const { body } = request;
 

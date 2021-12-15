@@ -41,6 +41,7 @@ loginRouter.post("/", async (request, response) => {
     id: user._id,
     avatar: user.avatar,
     feedback: user.feedback,
+    liked: user.liked,
   });
 });
 

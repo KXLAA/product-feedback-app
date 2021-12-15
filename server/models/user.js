@@ -18,6 +18,12 @@ const userSchema = mongoose.Schema({
       ref: "Feedback",
     },
   ],
+  liked: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Feedback",
+    },
+  ],
 });
 
 userSchema.set("toJSON", {
