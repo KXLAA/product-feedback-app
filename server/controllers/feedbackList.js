@@ -5,16 +5,133 @@ const { userExtractor } = require("../utils/middleware");
 
 // Get All
 feedbackRouter.get("/", async (request, response) => {
-  const feedbackList = await Feedback.find({})
-    .populate("user", {
-      username: 1,
-      name: 1,
-    })
-    .populate("comments", {
-      content: 1,
-      user: 1,
-    });
-  response.json(feedbackList.map((feedback) => feedback));
+  let responses;
+  if (!request.query.category) {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "all") {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "ui") {
+    responses = await Feedback.find({ category: "ui" })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "ux") {
+    responses = await Feedback.find({ category: "ux" })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "enhancement") {
+    responses = await Feedback.find({ category: "enhancement" })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "bug") {
+    responses = await Feedback.find({ category: "bug" })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.category === "feature") {
+    responses = await Feedback.find({ category: "feature" })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      });
+  }
+  if (request.query.sort === "mostUpvotes") {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ upvotes: -1 });
+  }
+  if (request.query.sort === "leastUpvotes") {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ upvotes: 1 });
+  }
+  if (request.query.sort === "mostComments") {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ comments: -1 });
+  }
+  if (request.query.sort === "leastComments") {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ comments: 1 });
+  }
+  response.json(responses.map((res) => res));
 });
 
 feedbackRouter.get("/:id", async (request, response) => {
