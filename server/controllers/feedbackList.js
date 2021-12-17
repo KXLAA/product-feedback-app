@@ -6,84 +6,8 @@ const { userExtractor } = require("../utils/middleware");
 // Get All
 feedbackRouter.get("/", async (request, response) => {
   let responses;
-  if (!request.query.category) {
-    responses = await Feedback.find({})
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "all") {
-    responses = await Feedback.find({})
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "ui") {
-    responses = await Feedback.find({ category: "ui" })
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "ux") {
-    responses = await Feedback.find({ category: "ux" })
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "enhancement") {
-    responses = await Feedback.find({ category: "enhancement" })
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "bug") {
-    responses = await Feedback.find({ category: "bug" })
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.category === "feature") {
-    responses = await Feedback.find({ category: "feature" })
-      .populate("user", {
-        username: 1,
-        name: 1,
-      })
-      .populate("comments", {
-        content: 1,
-        user: 1,
-      });
-  }
-  if (request.query.sort === "mostUpvotes") {
+
+  if (request.query.category === "" && request.query.sort === "mostUpvotes") {
     responses = await Feedback.find({})
       .populate("user", {
         username: 1,
@@ -95,7 +19,7 @@ feedbackRouter.get("/", async (request, response) => {
       })
       .sort({ upvotes: -1 });
   }
-  if (request.query.sort === "leastUpvotes") {
+  if (request.query.category === "" && request.query.sort === "leastUpvotes") {
     responses = await Feedback.find({})
       .populate("user", {
         username: 1,
@@ -107,7 +31,7 @@ feedbackRouter.get("/", async (request, response) => {
       })
       .sort({ upvotes: 1 });
   }
-  if (request.query.sort === "mostComments") {
+  if (request.query.category === "" && request.query.sort === "mostComments") {
     responses = await Feedback.find({})
       .populate("user", {
         username: 1,
@@ -119,8 +43,56 @@ feedbackRouter.get("/", async (request, response) => {
       })
       .sort({ comments: -1 });
   }
-  if (request.query.sort === "leastComments") {
+  if (request.query.category === "" && request.query.sort === "leastComments") {
     responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ comments: 1 });
+  }
+  if (request.query.sort === "mostUpvotes" && request.query.category) {
+    responses = await Feedback.find({ category: request.query.category })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ upvotes: -1 });
+  }
+  if (request.query.sort === "leastUpvotes" && request.query.category) {
+    responses = await Feedback.find({ category: request.query.category })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ upvotes: 1 });
+  }
+  if (request.query.sort === "mostComments" && request.query.category) {
+    responses = await Feedback.find({ category: request.query.category })
+      .populate("user", {
+        username: 1,
+        name: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ comments: -1 });
+  }
+  if (request.query.sort === "leastComments" && request.query.category) {
+    responses = await Feedback.find({ category: request.query.category })
       .populate("user", {
         username: 1,
         name: 1,

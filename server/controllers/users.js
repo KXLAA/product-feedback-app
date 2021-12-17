@@ -42,8 +42,6 @@ userRouter.put("/:id", async (request, response) => {
       options
     );
 
-  console.log(updatedUser);
-
   return response.json(updatedUser);
 });
 

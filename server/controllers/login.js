@@ -7,21 +7,18 @@ const User = require("../models/user");
 loginRouter.post("/", async (request, response) => {
   const { body } = request;
 
-  // Find user
   const user = await User.findOne({ username: body.username });
-
-  // Check if user exists & password is correct
   const passwordCorrect =
-    user === null ? false : bcrypt.compare(body.password, user.passwordHash);
+    user === null
+      ? false
+      : await bcrypt.compare(body.password, user.passwordHash);
 
-  // Return Valid status code
-  if (!(passwordCorrect && user)) {
-    return response.status(404).json({
+  if (!(user && passwordCorrect)) {
+    return response.status(401).json({
       error: "invalid username or password",
     });
   }
 
-  // Prep user for jwt Token
   const userForToken = {
     username: user.username,
     id: user._id,
