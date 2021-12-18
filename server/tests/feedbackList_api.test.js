@@ -18,13 +18,15 @@ describe("when there is a list of feedback", () => {
 
   test("Feedback is returned as json", async () => {
     await api
-      .get("/api/feedback-list")
+      .get("/api/feedback-list?category&sort=mostUpvotes")
       .expect(200)
       .expect("Content-Type", /application\/json/);
   });
 
   test("All feedback in feedback list returns", async () => {
-    const response = await api.get("/api/feedback-list");
+    const response = await api.get(
+      "/api/feedback-list?category&sort=mostUpvotes"
+    );
     expect(response.body).toHaveLength(helper.initialFeedbackList.length);
   });
 });
