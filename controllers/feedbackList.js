@@ -7,6 +7,20 @@ const { userExtractor } = require("../utils/middleware");
 feedbackRouter.get("/", async (request, response) => {
   let responses;
 
+  if (!request.query.category) {
+    responses = await Feedback.find({})
+      .populate("user", {
+        username: 1,
+        name: 1,
+        avatar: 1,
+      })
+      .populate("comments", {
+        content: 1,
+        user: 1,
+      })
+      .sort({ upvotes: -1 });
+  }
+
   if (request.query.category === "" && request.query.sort === "mostUpvotes") {
     responses = await Feedback.find({})
       .populate("user", {
