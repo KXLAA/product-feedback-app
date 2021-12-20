@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "hlogs": "heroku logs --app product-feedback-fem "
+    "prodlogs": "heroku logs --app product-feedback-fem "
   },
   "author": "KXLA",
   "license": "ISC",
