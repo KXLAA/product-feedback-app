@@ -2,8 +2,6 @@ const userRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
-const randomNumber = Math.floor(Math.random() * 1000 + 1);
-
 userRouter.get("/", async (request, response) => {
   const users = await User.find({});
   response.json(users);
@@ -59,7 +57,7 @@ userRouter.post("/", async (request, response) => {
     username: body.username,
     email: body.email,
     name: body.name,
-    avatar: `https://avatars.dicebear.com/api/human/${randomNumber}.svg`,
+    avatar: body.avatar,
     passwordHash,
   });
 
