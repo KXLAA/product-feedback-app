@@ -8,18 +8,3 @@ Content-Type: application/json
 
 }
 
-
-# {
-#     "username": "velvetround",
-#     "name":"Zena Kelley",
-#     "password": "velvetround",
-#     "feedback": []
-# }
-
-
-# {
-#     "username": "rotykay",
-#     "name":"Korty May",
-#     "password": "rotykay",
-#     "feedback": []
-# }

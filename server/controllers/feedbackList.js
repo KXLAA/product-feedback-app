@@ -108,9 +108,13 @@ feedbackRouter.get("/", async (request, response) => {
 });
 
 feedbackRouter.get("/:id", async (request, response) => {
-  const feedback = await Feedback.findById(request.params.id).populate(
-    "comments"
-  );
+  const feedback = await Feedback.findById(request.params.id)
+    .populate("comments")
+    .populate("user", {
+      username: 1,
+      name: 1,
+      avatar: 1,
+    });
   if (feedback) {
     response.json(feedback);
   } else {
@@ -186,6 +190,10 @@ feedbackRouter.delete("/:id", userExtractor, async (request, response) => {
   user.feedback = user.feedback.filter(
     (feedbackToDelete) =>
       feedbackToDelete.id.toString() !== request.params.id.toString()
+  );
+  user.liked = user.liked.filter(
+    (feedbackToDelete) =>
+      feedbackToDelete.toString() !== request.params.id.toString()
   );
   await user.save();
   return response.status(204).end();

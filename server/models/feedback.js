@@ -1,23 +1,26 @@
 /* eslint-disable no-underscore-dangle */
 const mongoose = require("mongoose");
 
-const feedbackSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  category: String,
-  upvotes: Number,
-  status: String,
-  description: { type: String, required: true },
-  comments: [
-    {
+const feedbackSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    category: String,
+    upvotes: Number,
+    status: String,
+    description: { type: String, required: true },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: "User",
     },
-  ],
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
   },
-});
+  { timestamps: true }
+);
 
 feedbackSchema.set("toJSON", {
   transform: (document, returnedObject) => {
