@@ -25,6 +25,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -37,6 +38,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -49,6 +51,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -61,6 +64,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -73,6 +77,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -85,6 +90,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
@@ -97,6 +103,7 @@ feedbackRouter.get("/", async (request, response) => {
       .populate("user", {
         username: 1,
         name: 1,
+        avatar: 1,
       })
       .populate("comments", {
         content: 1,
